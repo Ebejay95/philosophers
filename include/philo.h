@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/22 15:48:42 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/08/22 18:49:01 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PHILO_H
 
 /* Librarys*/
-# include "./../libft/libft.h"
+# include <stdio.h>
 # include <pthread.h>
 # include <sys/time.h>
 
