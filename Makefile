@@ -6,7 +6,7 @@
 #    By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/21 11:50:17 by jeberle           #+#    #+#              #
-#    Updated: 2024/08/21 12:04:14 by jeberle          ###   ########.fr        #
+#    Updated: 2024/08/22 18:40:11 by jeberle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,17 +69,6 @@ vpath %.h $(INC_DIRS)
 vpath %.d $(DEP_DIR)
 
 #------------------------------------------------------------------------------#
-#--------------                        LIBS                       -------------#
-#------------------------------------------------------------------------------#
-
-LIBFT_DIR=libft
-LIBFT=libft.a
-LIBFT_LIB=$(LIBFT_DIR)/$(LIBFT)
-LIBFTFLAGS=-L$(LIBFT_DIR) -lft
-
-SYSLIBFLAGS=
-
-#------------------------------------------------------------------------------#
 #--------------                        SRC                        -------------#
 #------------------------------------------------------------------------------#
 
@@ -99,11 +88,11 @@ BONUS_OBJECTS := $(addprefix $(OBJ_DIR)/, $(BONUS_SRCS:%.c=%.o))
 #--------------                      COMPILE                      -------------#
 #------------------------------------------------------------------------------#
 
-.PHONY: all clean fclean re libft
+.PHONY: all clean fclean re
 
-all: $(LIBFT_LIB) $(NAME)
+all: $(NAME)
 
-bonus: $(LIBFT_LIB) $(NAME_BONUS)
+bonus: $(NAME_BONUS)
 
 -include $(OBJECTS:.o=.d)
 -include $(BONUS_OBJECTS:.o=.d)
@@ -112,34 +101,23 @@ $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) $(DEPFLAGS) -c $< -o $@
 
-$(LIBFT_LIB):
-	@if [ ! -d "$(LIBFT_DIR)" ]; then \
-		echo "Cloning libft submodule..."; \
-		git submodule add https://github.com/Ebejay95/libft.git $(LIBFT_DIR); \
-		git submodule update --init --recursive; \
-	else \
-		echo "Updating libft submodule..."; \
-		git submodule update --init --recursive --remote; \
-	fi
-	@$(MAKE) -C $(LIBFT_DIR)
-
 $(NAME): $(OBJECTS)
-	@$(CC) -o $@ $^ $(LIBFTFLAGS) $(SYSLIBFLAGS) $(LDFLAGS)
+	@$(CC) -o $@ $^ $(LDFLAGS)
 	@echo "$(SUCCESS)"
 
 $(NAME_BONUS): $(BONUS_OBJECTS)
-	@$(CC) -o $@ $^ $(LIBFTFLAGS) $(SYSLIBFLAGS) $(LDFLAGS)
+	@$(CC) -o $@ $^ $(LDFLAGS)
 	@echo "$(SUCCESS)"
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(MAKE) -C clean
 	@echo "$(RED)objects deleted$(X)"
 
 fclean: clean
 	@rm -rf $(NAME_BONUS)
 	@rm -rf $(NAME)
-	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C fclean
 	@echo "$(RED)philo deleted$(X)"
 
 re: fclean all
