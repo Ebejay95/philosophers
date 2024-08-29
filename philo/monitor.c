@@ -6,7 +6,7 @@
 /*   By: jonathaneberle <jonathaneberle@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 19:51:02 by jonathanebe       #+#    #+#             */
-/*   Updated: 2024/08/29 21:52:30 by jonathanebe      ###   ########.fr       */
+/*   Updated: 2024/08/29 21:57:10 by jonathanebe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	*run_monitor(void *d_point)
 		{
 			if (current_time_in_milliseconds() - d->philos[i].had_meal_time > d->die_time)
 			{
-				printf("%lld %d died\n", current_time_in_milliseconds() - d->now, d->philos[i].id);
+				printf(RED"%lld %d died\n"D, current_time_in_milliseconds() - d->now, d->philos[i].id);
 				pthread_mutex_lock(&d->end_mutex);
 				d->end = 1;
 				pthread_mutex_unlock(&d->end_mutex);

@@ -6,12 +6,21 @@
 /*   By: jonathaneberle <jonathaneberle@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/29 21:50:26 by jonathanebe      ###   ########.fr       */
+/*   Updated: 2024/08/29 21:57:02 by jonathanebe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
+
+# define RED "\x1b[31m"
+# define G "\033[0;32m"
+# define B "\033[0;34m"
+# define Y "\033[0;93m"
+# define C "\033[0;36m"
+# define M "\033[0;35m"
+# define W "\033[0;97m"
+# define D "\x1b[0m"
 
 /* Librarys*/
 # include <unistd.h>

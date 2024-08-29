@@ -6,7 +6,7 @@
 /*   By: jonathaneberle <jonathaneberle@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 19:52:11 by jonathanebe       #+#    #+#             */
-/*   Updated: 2024/08/29 21:53:13 by jonathanebe      ###   ########.fr       */
+/*   Updated: 2024/08/29 21:59:14 by jonathanebe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	*run_philosopher(void *p_point)
 		}
 		pthread_mutex_unlock(&p->desk->end_mutex);
 		pthread_mutex_lock(&p->left_fork->fork);
-		printf("%lld %d has taken a fork\n", current_time_in_milliseconds() - p->desk->now, p->id);
+		printf(G"%lld %d has taken a fork\n"D, current_time_in_milliseconds() - p->desk->now, p->id);
 		pthread_mutex_lock(&p->right_fork->fork);
-		printf("%lld %d has taken a fork\n", current_time_in_milliseconds() - p->desk->now, p->id);
-		printf("%lld %d is eating\n", current_time_in_milliseconds() - p->desk->now, p->id);
+		printf(G"%lld %d has taken a fork\n"D, current_time_in_milliseconds() - p->desk->now, p->id);
+		printf(Y"%lld %d is eating\n"D, current_time_in_milliseconds() - p->desk->now, p->id);
 		p->had_meal_time = current_time_in_milliseconds();
 		usleep(p->desk->eat_time * 1000);
 		p->meals++;
@@ -38,9 +38,9 @@ void	*run_philosopher(void *p_point)
 			p->done = 1;
 		pthread_mutex_unlock(&p->left_fork->fork);
 		pthread_mutex_unlock(&p->right_fork->fork);
-		printf("%lld %d is sleeping\n", current_time_in_milliseconds() - p->desk->now, p->id);
+		printf(B"%lld %d is sleeping\n"D, current_time_in_milliseconds() - p->desk->now, p->id);
 		usleep(p->desk->sleep_time * 1000);
-		printf("%lld %d is thinking\n", current_time_in_milliseconds() - p->desk->now, p->id);
+		printf(M"%lld %d is thinking\n"D, current_time_in_milliseconds() - p->desk->now, p->id);
 	}
 	return (NULL);
 }
