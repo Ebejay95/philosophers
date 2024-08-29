@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+         #
+#    By: jonathaneberle <jonathaneberle@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/21 11:50:17 by jeberle           #+#    #+#              #
-#    Updated: 2024/08/29 14:49:50 by jeberle          ###   ########.fr        #
+#    Updated: 2024/08/29 19:51:53 by jonathanebe      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,9 @@ vpath %.d $(DEP_DIR)
 #------------------------------------------------------------------------------#
 
 SRCS=	philo.c \
+		dinner.c \
+		helpers.c \
+		monitor.c \
 		inputval.c \
 		inputval2.c \
 

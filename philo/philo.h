@@ -6,7 +6,7 @@
 /*   By: jonathaneberle <jonathaneberle@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/29 19:42:20 by jonathanebe      ###   ########.fr       */
+/*   Updated: 2024/08/29 21:50:26 by jonathanebe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PHILO_H
 
 /* Librarys*/
+# include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <pthread.h>
@@ -47,11 +48,11 @@ struct s_desk
 {
 	long long		now;
 	int				end;
-	long			philo_ammount;
+	long			philo_amount;
 	long			die_time;
 	long			eat_time;
 	long			sleep_time;
-	long			meal_ammount;
+	long			meal_amount;
 	t_fork			*forks;
 	t_philo			*philos;
 	pthread_t		monitor;
@@ -71,4 +72,10 @@ void		check_numeric(int *valid, char *argument);
 int			check_numerics(int argc, char **argv);
 int			retreive_input(t_desk *d, int argc, char **argv);
 
+int			setup_philos_and_forks(t_desk *d);
+int			setup(t_desk *d);
+int			end(t_desk *d);
+
+void		*run_monitor(void *d_point);
+void		*run_philosopher(void *p_point);
 #endif

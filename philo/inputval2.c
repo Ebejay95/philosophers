@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inputval2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jonathaneberle <jonathaneberle@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:50:14 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/29 14:50:46 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/08/29 21:30:16 by jonathanebe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ int	retreive_input(t_desk *d, int argc, char **argv)
 	{
 		d->now = current_time_in_milliseconds();
 		d->end = 0;
-		d->philo_ammount = ft_atol(argv[1]);
+		d->philo_amount = ft_atol(argv[1]);
 		d->die_time = ft_atol(argv[2]);
 		d->eat_time = ft_atol(argv[3]);
 		d->sleep_time = ft_atol(argv[4]);
 		if (argc == 6)
-			d->meal_ammount = ft_atol(argv[5]);
+			d->meal_amount = ft_atol(argv[5]);
 		else
-			d->meal_ammount = -1;
+			d->meal_amount = -1;
 		return (0);
 	}
 	else
