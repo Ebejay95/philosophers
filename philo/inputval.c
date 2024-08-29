@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   inputval.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/21 11:56:00 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/22 18:53:10 by jeberle          ###   ########.fr       */
+/*   Created: 2024/08/29 14:48:17 by jeberle           #+#    #+#             */
+/*   Updated: 2024/08/29 14:50:05 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../include/philo.h"
+#include "./philo.h"
 
 int	ft_isdigit(int c)
 {
@@ -53,33 +53,32 @@ long	ft_atol(const char *str)
 	return (i);
 }
 
-int retreive_input(t_desk *d, int argc, char **argv)
+long long	current_time_in_milliseconds(void)
 {
-	if (argc == 6 || argc == 5)
-	{
-		d->now = gettimeofday();
-		d->end = 0;
-		d->philo_ammount = ft_atol(argv[1]);
-		d->die_time = ft_atol(argv[2]);
-		d->eat_time = ft_atol(argv[3]);
-		d->sleep_time = ft_atol(argv[4]);
-		d->meal_ammount = ft_atol(argv[5]);
-		return (0);
-	}
-	else
-		return (0);
+	struct timeval	now;
+	long long		milliseconds;
+
+	gettimeofday(&now, NULL);
+	milliseconds = (now.tv_sec * 1000LL) + (now.tv_usec / 1000);
+	return (milliseconds);
 }
 
-// philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]
-int	main(int argc, char **argv)
+void	check_numeric(int *valid, char *argument)
 {
-	t_desk	desk;
-	if(retreive_input(&desk, argc, argv))
+	int	i;
+
+	if (*valid == 0)
 	{
-		printf("Hello Philo\n");
-	}
-	else
-	{
-		printf("No Philo\n");
+		i = 0;
+		while (ft_isspace(argument[i]))
+			i++;
+		while (argument[i] == 43)
+			i++;
+		while (*argument != '\0' && ft_isdigit(argument[i]))
+			i++;
+		if (argument[i] == '\0')
+			*valid = 0;
+		else
+			*valid = 1;
 	}
 }

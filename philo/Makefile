@@ -6,7 +6,7 @@
 #    By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/21 11:50:17 by jeberle           #+#    #+#              #
-#    Updated: 2024/08/22 18:40:11 by jeberle          ###   ########.fr        #
+#    Updated: 2024/08/29 14:49:50 by jeberle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,14 +39,13 @@ $(MAGENTA)███████████████████████�
 #------------------------------------------------------------------------------#
 
 NAME=philo
-NAME_BONUS=philo_bonus
 
 #------------------------------------------------------------------------------#
 #--------------                       FLAGS                       -------------#
 #------------------------------------------------------------------------------#
 
 CC=cc
-CFLAGS=-Wall -Wextra -Werror -I/usr/local/opt/readline/include
+CFLAGS=-Wall -Wextra -Werror
 LDFLAGS=
 
 ifeq ($(DEBUG), 1)
@@ -72,17 +71,15 @@ vpath %.d $(DEP_DIR)
 #--------------                        SRC                        -------------#
 #------------------------------------------------------------------------------#
 
-SRCS=	mandatory/philo.c \
-
-BONUS_SRCS= \
-# bonus/minishell_bonus.c \
+SRCS=	philo.c \
+		inputval.c \
+		inputval2.c \
 
 #------------------------------------------------------------------------------#
 #--------------                      OBJECTS                      -------------#
 #------------------------------------------------------------------------------#
 
 OBJECTS := $(addprefix $(OBJ_DIR)/, $(SRCS:%.c=%.o))
-BONUS_OBJECTS := $(addprefix $(OBJ_DIR)/, $(BONUS_SRCS:%.c=%.o))
 
 #------------------------------------------------------------------------------#
 #--------------                      COMPILE                      -------------#
@@ -95,7 +92,6 @@ all: $(NAME)
 bonus: $(NAME_BONUS)
 
 -include $(OBJECTS:.o=.d)
--include $(BONUS_OBJECTS:.o=.d)
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(@D)
@@ -105,19 +101,12 @@ $(NAME): $(OBJECTS)
 	@$(CC) -o $@ $^ $(LDFLAGS)
 	@echo "$(SUCCESS)"
 
-$(NAME_BONUS): $(BONUS_OBJECTS)
-	@$(CC) -o $@ $^ $(LDFLAGS)
-	@echo "$(SUCCESS)"
-
 clean:
 	@rm -rf $(OBJ_DIR)
-	@$(MAKE) -C clean
 	@echo "$(RED)objects deleted$(X)"
 
 fclean: clean
-	@rm -rf $(NAME_BONUS)
-	@rm -rf $(NAME)
-	@$(MAKE) -C fclean
-	@echo "$(RED)philo deleted$(X)"
+	@rm -f $(NAME)
+	@echo "$(RED)philo binaries deleted$(X)"
 
 re: fclean all
