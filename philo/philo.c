@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jonathaneberle <jonathaneberle@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:45:19 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/29 14:51:12 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/08/29 19:40:33 by jonathanebe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,80 @@ void	put_desk(t_desk *d)
 		printf("meal_ammount: undefined\n");
 }
 
+int setup_philos_and_forks(t_desk *d)
+{
+	int	i;
+
+	i = 0;
+	while (i < d->philo_ammount)
+	{
+		if (pthread_mutex_init(&d->forks[i].fork, NULL) != 0)
+			return (1);
+		d->forks[i].id = i;
+		d->philos[i].id = i + 1;
+		d->philos[i].meals = 0;
+		d->philos[i].done = 0;
+		d->philos[i].had_meal_time = d->now;
+		d->philos[i].desk = d;
+		d->philos[i].left_fork = &d->forks[i];
+		d->philos[i].right_fork = &d->forks[(i + 1) % d->philo_ammount];
+		i++;
+	}
+	return (0);
+}
+
+int setup(t_desk *d)
+{
+	d->end = 0;
+	d->forks = malloc(sizeof(t_fork) * d->philo_ammount);
+	if (!d->forks)
+		return (1);
+	d->philos = malloc(sizeof(t_philo) * d->philo_ammount);
+	if (!d->philos)
+	{
+		free(d->forks);
+		return (1);
+	}
+	if (pthread_mutex_init(&d->end_mutex, NULL) != 0)
+		return (1);
+	setup_philos_and_forks(d);
+	return (0);
+}
+
+int end(t_desk *d)
+{
+	int i;
+
+	pthread_join(d->monitor, NULL);
+	i = 0;
+	while (i < d->philo_ammount)
+	{
+		pthread_join(d->philos[i].thread, NULL);
+		pthread_mutex_destroy(&d->forks[i].fork);
+		i++;
+	}
+	pthread_mutex_destroy(&d->end_mutex);
+	free(d->philos);
+	free(d->forks);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
-	t_desk	desk;
+	t_desk	d;
 
-	if (retreive_input(&desk, argc, argv) == 0)
+	if (retreive_input(&d, argc, argv) == 0)
 	{
-		printf("Hello Philo\n");
-		put_desk(&desk);
+		if(setup(&d) != 0)
+			return (1);
+		//if(start(d) != 0)
+		//	return (1);
+		end(&d);
 	}
 	else
 	{
-		printf("No Philo\n");
+		printf("invalid input\n");
+		return (1);
 	}
+	return (0);
 }

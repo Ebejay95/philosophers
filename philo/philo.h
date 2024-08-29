@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jonathaneberle <jonathaneberle@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/29 14:50:31 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/08/29 19:35:13 by jonathanebe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PHILO_H
 
 /* Librarys*/
+# include <stdlib.h>
 # include <stdio.h>
 # include <pthread.h>
 # include <sys/time.h>
@@ -53,12 +54,15 @@ struct s_desk
 	long			meal_ammount;
 	t_fork			*forks;
 	t_philo			*philos;
+	pthread_t		monitor;
+	pthread_mutex_t	end_mutex;
 };
 
 // #############################################################################
 // #                               Functions                                   #
 // #############################################################################
 
+// validators
 int			ft_isdigit(int c);
 int			ft_isspace(char c);
 long		ft_atol(const char *str);
@@ -66,5 +70,6 @@ long long	current_time_in_milliseconds(void);
 void		check_numeric(int *valid, char *argument);
 int			check_numerics(int argc, char **argv);
 int			retreive_input(t_desk *d, int argc, char **argv);
+
 
 #endif
