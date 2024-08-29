@@ -6,7 +6,7 @@
 /*   By: jonathaneberle <jonathaneberle@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/29 19:35:13 by jonathanebe      ###   ########.fr       */
+/*   Updated: 2024/08/29 19:42:20 by jonathanebe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,5 @@ long long	current_time_in_milliseconds(void);
 void		check_numeric(int *valid, char *argument);
 int			check_numerics(int argc, char **argv);
 int			retreive_input(t_desk *d, int argc, char **argv);
-
 
 #endif

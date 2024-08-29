@@ -6,7 +6,7 @@
 /*   By: jonathaneberle <jonathaneberle@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:45:19 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/29 19:40:33 by jonathanebe      ###   ########.fr       */
+/*   Updated: 2024/08/29 19:43:01 by jonathanebe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	put_desk(t_desk *d)
 		printf("meal_ammount: undefined\n");
 }
 
-int setup_philos_and_forks(t_desk *d)
+int	setup_philos_and_forks(t_desk *d)
 {
 	int	i;
 
@@ -48,7 +48,7 @@ int setup_philos_and_forks(t_desk *d)
 	return (0);
 }
 
-int setup(t_desk *d)
+int	setup(t_desk *d)
 {
 	d->end = 0;
 	d->forks = malloc(sizeof(t_fork) * d->philo_ammount);
@@ -66,9 +66,9 @@ int setup(t_desk *d)
 	return (0);
 }
 
-int end(t_desk *d)
+int	end(t_desk *d)
 {
-	int i;
+	int	i;
 
 	pthread_join(d->monitor, NULL);
 	i = 0;
@@ -90,7 +90,7 @@ int	main(int argc, char **argv)
 
 	if (retreive_input(&d, argc, argv) == 0)
 	{
-		if(setup(&d) != 0)
+		if (setup(&d) != 0)
 			return (1);
 		//if(start(d) != 0)
 		//	return (1);
