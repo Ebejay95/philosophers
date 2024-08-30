@@ -6,7 +6,7 @@
 /*   By: jonathaneberle <jonathaneberle@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/29 21:57:02 by jonathanebe      ###   ########.fr       */
+/*   Updated: 2024/08/30 10:00:04 by jonathanebe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,15 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
-	pthread_t	thread;
-	int			id;
-	t_fork		*right_fork;
-	t_fork		*left_fork;
-	long		meals;
-	int			done;
-	long		had_meal_time;
-	t_desk		*desk;
+	pthread_t		thread;
+	int				id;
+	t_fork			*right_fork;
+	t_fork			*left_fork;
+	long			meals;
+	int				done;
+	long			had_meal_time;
+	t_desk			*desk;
+	pthread_mutex_t	state_mutex;
 }	t_philo;
 
 struct s_desk
@@ -65,6 +66,7 @@ struct s_desk
 	t_fork			*forks;
 	t_philo			*philos;
 	pthread_t		monitor;
+	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	end_mutex;
 };
 
@@ -81,10 +83,13 @@ void		check_numeric(int *valid, char *argument);
 int			check_numerics(int argc, char **argv);
 int			retreive_input(t_desk *d, int argc, char **argv);
 
+void		set_end(t_desk *d);
 int			setup_philos_and_forks(t_desk *d);
 int			setup(t_desk *d);
 int			end(t_desk *d);
 
 void		*run_monitor(void *d_point);
 void		*run_philosopher(void *p_point);
+void		log_action(t_philo *p, char *action, char *color);
+int			check_end(t_desk *d);
 #endif
