@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/30 13:29:49 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/08/30 15:43:28 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,18 @@ int			end(t_desk *d);
 
 void		*run_monitor(void *d_point);
 void		*philo(void *p_point);
-void		log_action(t_philo *p, char *action, char *color);
+void		log_action(t_philo *p, char *action);
 int			check_end(t_desk *d);
+void		precise_sleep(long long time);
+void		calculate_think_time(t_philo *p, long long *think_time);
+void		think_in_start(t_philo *p);
+int			check_end(t_desk *d);
+void		set_end(t_desk *d);
+
+int			eat(t_philo *p);
+int			sleep_and_think(t_philo *p);
+int			should_eat_urgently(t_philo *p);
+void		handle_single_philosopher(t_philo *p);
+int			handle_philosopher_actions(t_philo *p, long long *think_time);
+int			take_forks(t_philo *p);
 #endif
