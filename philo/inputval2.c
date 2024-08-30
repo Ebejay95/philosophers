@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inputval2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonathaneberle <jonathaneberle@student.    +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:50:14 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/29 21:30:16 by jonathanebe      ###   ########.fr       */
+/*   Updated: 2024/08/30 13:29:49 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	retreive_input(t_desk *d, int argc, char **argv)
 	check_nums = check_numerics(argc, argv);
 	if ((argc == 6 || argc == 5) && check_nums == 0)
 	{
-		d->now = current_time_in_milliseconds();
+		d->now = my_now();
 		d->end = 0;
 		d->philo_amount = ft_atol(argv[1]);
 		d->die_time = ft_atol(argv[2]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonathaneberle <jonathaneberle@student.    +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 19:51:02 by jonathanebe       #+#    #+#             */
-/*   Updated: 2024/08/30 10:02:01 by jonathanebe      ###   ########.fr       */
+/*   Updated: 2024/08/30 13:29:49 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,18 @@ void	*run_monitor(void *d_point)
 		i = -1;
 		while (++i < d->philo_amount)
 		{
-			pthread_mutex_lock(&d->philos[i].state_mutex);
-			time_since_meal = current_time_in_milliseconds() - d->philos[i].had_meal_time;
+			pthread_mutex_lock(&d->phls[i].state_mutex);
+			time_since_meal = my_now() - d->phls[i].had_meal_time;
 			if (time_since_meal > d->die_time)
 			{
-				log_action(&d->philos[i], "died", RED);
+				log_action(&d->phls[i], "died", RED);
 				set_end(d);
-				pthread_mutex_unlock(&d->philos[i].state_mutex);
+				pthread_mutex_unlock(&d->phls[i].state_mutex);
 				return (NULL);
 			}
-			if (d->meal_amount != -1 && d->philos[i].meals < d->meal_amount)
+			if (d->meal_amount != -1 && d->phls[i].meals < d->meal_amount)
 				all_ate = 0;
-			pthread_mutex_unlock(&d->philos[i].state_mutex);
+			pthread_mutex_unlock(&d->phls[i].state_mutex);
 		}
 		if (d->meal_amount != -1 && all_ate)
 		{

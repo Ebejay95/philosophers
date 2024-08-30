@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonathaneberle <jonathaneberle@student.    +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 19:47:06 by jonathanebe       #+#    #+#             */
-/*   Updated: 2024/08/30 10:09:25 by jonathanebe      ###   ########.fr       */
+/*   Updated: 2024/08/30 13:31:00 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ int	setup_philos_and_forks(t_desk *d)
 	{
 		if (pthread_mutex_init(&d->forks[i].fork, NULL) != 0)
 			return (1);
-		if (pthread_mutex_init(&d->philos[i].state_mutex, NULL) != 0)
+		if (pthread_mutex_init(&d->phls[i].state_mutex, NULL) != 0)
 			return (1);
 		d->forks[i].id = i;
-		d->philos[i].id = i + 1;
-		d->philos[i].meals = 0;
-		d->philos[i].done = 0;
-		d->philos[i].had_meal_time = d->now;
-		d->philos[i].desk = d;
-		d->philos[i].left_fork = &d->forks[i];
-		d->philos[i].right_fork = &d->forks[(i + 1) % d->philo_amount];
+		d->phls[i].id = i + 1;
+		d->phls[i].meals = 0;
+		d->phls[i].done = 0;
+		d->phls[i].had_meal_time = d->now;
+		d->phls[i].desk = d;
+		d->phls[i].left_fork = &d->forks[i];
+		d->phls[i].right_fork = &d->forks[(i + 1) % d->philo_amount];
+		d->fork_status[i] = 0;
 		i++;
 	}
 	return (0);
@@ -42,15 +43,22 @@ int	setup(t_desk *d)
 	d->forks = malloc(sizeof(t_fork) * d->philo_amount);
 	if (!d->forks)
 		return (1);
-	d->philos = malloc(sizeof(t_philo) * d->philo_amount);
-	if (!d->philos)
+	d->phls = malloc(sizeof(t_philo) * d->philo_amount);
+	if (!d->phls)
 	{
 		free(d->forks);
 		return (1);
 	}
-	if (pthread_mutex_init(&d->end_mutex, NULL) != 0)
+	d->fork_status = malloc(sizeof(int) * d->philo_amount);
+	if (!d->fork_status)
+	{
+		free(d->forks);
+		free(d->phls);
 		return (1);
-	if (pthread_mutex_init(&d->write_mutex, NULL) != 0)
+	}
+	if (pthread_mutex_init(&d->end_mutex, NULL) != 0
+		|| pthread_mutex_init(&d->write_mutex, NULL) != 0
+		|| pthread_mutex_init(&d->butler_mutex, NULL) != 0)
 		return (1);
 	setup_philos_and_forks(d);
 	return (0);
@@ -64,22 +72,24 @@ int	end(t_desk *d)
 	i = 0;
 	while (i < d->philo_amount)
 	{
-		pthread_join(d->philos[i].thread, NULL);
+		pthread_join(d->phls[i].thread, NULL);
 		pthread_mutex_destroy(&d->forks[i].fork);
-		pthread_mutex_destroy(&d->philos[i].state_mutex);
+		pthread_mutex_destroy(&d->phls[i].state_mutex);
 		i++;
 	}
 	pthread_mutex_destroy(&d->end_mutex);
 	pthread_mutex_destroy(&d->write_mutex);
-	free(d->philos);
+	pthread_mutex_destroy(&d->butler_mutex);
+	free(d->phls);
 	free(d->forks);
+	free(d->fork_status);
 	return (0);
 }
 
-void	log_action(t_philo *p, char *action, char *color)
+void	log_action(t_philo *p, char *a, char *color)
 {
 	pthread_mutex_lock(&p->desk->write_mutex);
 	if (!check_end(p->desk))
-		printf("%s%lld %d %s\n"D, color, current_time_in_milliseconds() - p->desk->now, p->id, action);
+		printf("%s%lld %d %s\n"D, color, my_now() - p->desk->now, p->id, a);
 	pthread_mutex_unlock(&p->desk->write_mutex);
 }

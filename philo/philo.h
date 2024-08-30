@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonathaneberle <jonathaneberle@student.    +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/30 10:00:04 by jonathanebe      ###   ########.fr       */
+/*   Updated: 2024/08/30 13:29:49 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,13 @@ struct s_desk
 	long			sleep_time;
 	long			meal_amount;
 	t_fork			*forks;
-	t_philo			*philos;
+	t_philo			*phls;
 	pthread_t		monitor;
 	pthread_mutex_t	write_mutex;
+	int				*fork_status;
+	pthread_mutex_t	butler_mutex;
 	pthread_mutex_t	end_mutex;
+	int				all_ate;
 };
 
 // #############################################################################
@@ -78,7 +81,7 @@ struct s_desk
 int			ft_isdigit(int c);
 int			ft_isspace(char c);
 long		ft_atol(const char *str);
-long long	current_time_in_milliseconds(void);
+long long	my_now(void);
 void		check_numeric(int *valid, char *argument);
 int			check_numerics(int argc, char **argv);
 int			retreive_input(t_desk *d, int argc, char **argv);
@@ -89,7 +92,7 @@ int			setup(t_desk *d);
 int			end(t_desk *d);
 
 void		*run_monitor(void *d_point);
-void		*run_philosopher(void *p_point);
+void		*philo(void *p_point);
 void		log_action(t_philo *p, char *action, char *color);
 int			check_end(t_desk *d);
 #endif

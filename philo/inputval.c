@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:48:17 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/29 14:50:05 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/08/30 13:29:49 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ long	ft_atol(const char *str)
 	return (i);
 }
 
-long long	current_time_in_milliseconds(void)
+long long	my_now(void)
 {
 	struct timeval	now;
 	long long		milliseconds;
