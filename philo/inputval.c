@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:48:17 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/30 13:29:49 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/02 17:37:15 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ long	ft_atol(const char *str)
 
 	i = 0;
 	ms = 0;
-	while (ft_isspace(*str))
-		str++;
 	if (*str == 43 || *str == 45)
 	{
 		if (*str == 45)
@@ -67,11 +65,11 @@ void	check_numeric(int *valid, char *argument)
 {
 	int	i;
 
+	if (!ft_strcmp(argument, ""))
+		*valid = 1;
 	if (*valid == 0)
 	{
 		i = 0;
-		while (ft_isspace(argument[i]))
-			i++;
 		while (argument[i] == 43)
 			i++;
 		while (*argument != '\0' && ft_isdigit(argument[i]))

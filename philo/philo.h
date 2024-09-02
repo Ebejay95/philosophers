@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/30 15:43:28 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/02 17:33:02 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ struct s_desk
 // #                               Functions                                   #
 // #############################################################################
 
-// validators
+int			ft_strcmp(const char *s1, const char *s2);
 int			ft_isdigit(int c);
 int			ft_isspace(char c);
 long		ft_atol(const char *str);
