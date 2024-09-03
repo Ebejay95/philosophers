@@ -6,19 +6,19 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:32:44 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/30 15:33:15 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/03 15:58:22 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
-void	precise_sleep(long long time)
+void	precise_sleep(long long time, t_desk *d)
 {
 	long long	start;
 	long long	now;
 
 	start = my_now();
-	while (1)
+	while (!check_end(d))
 	{
 		now = my_now();
 		if (now - start >= time)
@@ -47,7 +47,8 @@ void	calculate_think_time(t_philo *p, long long *think_time)
 void	think_in_start(t_philo *p)
 {
 	log_action(p, "is thinking");
-	precise_sleep(p->desk->eat_time);
+	precise_sleep(p->desk->eat_time, p->desk);
+	p->desk->first_iteration = 0;
 }
 
 int	check_end(t_desk *d)

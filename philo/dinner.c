@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 19:52:11 by jonathanebe       #+#    #+#             */
-/*   Updated: 2024/08/30 15:42:28 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/03 15:58:52 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,40 +69,43 @@ int	take_forks(t_philo *p)
 		pthread_mutex_unlock(&p->desk->butler_mutex);
 		if (check_end(p->desk))
 			return (1);
-		usleep(1000);
 		pthread_mutex_lock(&p->desk->butler_mutex);
 	}
 }
 
-void	start_trick(int id, long long eat_time)
+void	start_trick(t_philo *p, long long eat_time)
 {
-	if (id % 2 == 0)
+	if (p->id % 2 == 0)
+	{
+		log_action(p, "is thinking");
 		usleep(eat_time / 2);
+	}
+	p->desk->first_iteration = 1;
 }
 
-void	*philo(void *p_point)
+void	*philo(void *arg)
 {
-	t_philo		*p;
-	int			first_iteration;
-	long long	think_time;
+	t_philo			*p;
+	t_desk			*desk;
+	long long		think_time;
+	t_philo_args	*args;
 
-	first_iteration = 1;
-	p = (t_philo *)p_point;
-	start_trick(p->id, p->desk->eat_time);
+	args = (t_philo_args *)arg;
+	p = args->philo;
+	desk = args->desk;
+	free(args);
+	start_trick(p, desk->eat_time);
 	while (1)
 	{
-		if (check_end(p->desk))
+		if (check_end(desk))
 			break ;
-		if (p->desk->philo_amount == 1)
+		if (desk->philo_amount == 1)
 		{
 			handle_single_philosopher(p);
 			break ;
 		}
-		if (first_iteration && p->id % 2 != 0)
-		{
+		if (p->desk->first_iteration && p->id % 2 != 0)
 			think_in_start(p);
-			first_iteration = 0;
-		}
 		if (handle_philosopher_actions(p, &think_time) != 0)
 			break ;
 	}

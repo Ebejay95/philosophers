@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/02 17:33:02 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/03 15:56:43 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
+	int				index;
 	t_fork			*right_fork;
 	t_fork			*left_fork;
 	long			meals;
@@ -53,6 +54,12 @@ typedef struct s_philo
 	t_desk			*desk;
 	pthread_mutex_t	state_mutex;
 }	t_philo;
+
+typedef struct s_philo_args
+{
+	t_philo	*philo;
+	t_desk	*desk;
+}	t_philo_args;
 
 struct s_desk
 {
@@ -64,7 +71,10 @@ struct s_desk
 	long			sleep_time;
 	long			meal_amount;
 	t_fork			*forks;
+	int				*forks_ini;
 	t_philo			*phls;
+	int				*phls_ini;
+	int				first_iteration;
 	pthread_t		monitor;
 	pthread_mutex_t	write_mutex;
 	int				*fork_status;
@@ -76,7 +86,6 @@ struct s_desk
 // #############################################################################
 // #                               Functions                                   #
 // #############################################################################
-
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_isdigit(int c);
 int			ft_isspace(char c);
@@ -95,7 +104,7 @@ void		*run_monitor(void *d_point);
 void		*philo(void *p_point);
 void		log_action(t_philo *p, char *action);
 int			check_end(t_desk *d);
-void		precise_sleep(long long time);
+void		precise_sleep(long long time, t_desk *d);
 void		calculate_think_time(t_philo *p, long long *think_time);
 void		think_in_start(t_philo *p);
 int			check_end(t_desk *d);

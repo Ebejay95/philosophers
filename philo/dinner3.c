@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:35:25 by jeberle           #+#    #+#             */
-/*   Updated: 2024/08/30 15:42:35 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/03 14:37:18 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	eat(t_philo *p)
 	pthread_mutex_lock(&p->state_mutex);
 	p->had_meal_time = my_now();
 	pthread_mutex_unlock(&p->state_mutex);
-	precise_sleep(p->desk->eat_time);
+	precise_sleep(p->desk->eat_time, p->desk);
 	pthread_mutex_lock(&p->state_mutex);
 	p->meals++;
 	if (p->desk->meal_amount != -1 && p->meals >= p->desk->meal_amount)
@@ -36,7 +36,7 @@ int	eat(t_philo *p)
 int	sleep_and_think(t_philo *p)
 {
 	log_action(p, "is sleeping");
-	precise_sleep(p->desk->sleep_time);
+	precise_sleep(p->desk->sleep_time, p->desk);
 	log_action(p, "is thinking");
 	return (0);
 }
@@ -54,7 +54,7 @@ int	should_eat_urgently(t_philo *p)
 void	handle_single_philosopher(t_philo *p)
 {
 	log_action(p, "has taken a fork");
-	precise_sleep(p->desk->die_time);
+	precise_sleep(p->desk->die_time, p->desk);
 }
 
 int	handle_philosopher_actions(t_philo *p, long long *think_time)
@@ -65,6 +65,6 @@ int	handle_philosopher_actions(t_philo *p, long long *think_time)
 		return (1);
 	calculate_think_time(p, think_time);
 	if (!should_eat_urgently(p))
-		precise_sleep(*think_time);
+		precise_sleep(*think_time, p->desk);
 	return (0);
 }

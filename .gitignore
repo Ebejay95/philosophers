@@ -1,3 +1,5 @@
 .gitmodules
 ./libft/**/*
 ./.devcontainer/**/*
+sh.sh
+out.txt
