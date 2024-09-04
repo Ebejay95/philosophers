@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dinner3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:35:25 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/03 14:37:18 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/04 07:16:17 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,17 @@ int	eat(t_philo *p)
 	pthread_mutex_lock(&p->state_mutex);
 	p->had_meal_time = my_now();
 	pthread_mutex_unlock(&p->state_mutex);
+	if (should_exit(p->desk))
+		return (release_forks(p), 1);
 	precise_sleep(p->desk->eat_time, p->desk);
+	if (should_exit(p->desk))
+		return (release_forks(p), 1);
 	pthread_mutex_lock(&p->state_mutex);
 	p->meals++;
 	if (p->desk->meal_amount != -1 && p->meals >= p->desk->meal_amount)
 		p->done = 1;
 	pthread_mutex_unlock(&p->state_mutex);
-	pthread_mutex_unlock(&p->right_fork->fork);
-	pthread_mutex_unlock(&p->left_fork->fork);
-	pthread_mutex_lock(&p->desk->butler_mutex);
-	p->desk->fork_status[p->left_fork->id] = 0;
-	p->desk->fork_status[p->right_fork->id] = 0;
-	pthread_mutex_unlock(&p->desk->butler_mutex);
+	release_forks(p);
 	return (0);
 }
 

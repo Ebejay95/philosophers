@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/03 15:56:43 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/04 07:37:41 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,9 @@ struct s_desk
 	int				*phls_ini;
 	int				first_iteration;
 	pthread_t		monitor;
+	pthread_mutex_t	first_iteration_mutex;
 	pthread_mutex_t	write_mutex;
-	int				*fork_status;
+	int				*fstate;
 	pthread_mutex_t	butler_mutex;
 	pthread_mutex_t	end_mutex;
 	int				all_ate;
@@ -109,11 +110,21 @@ void		calculate_think_time(t_philo *p, long long *think_time);
 void		think_in_start(t_philo *p);
 int			check_end(t_desk *d);
 void		set_end(t_desk *d);
-
+void		clean_exit(t_desk *d);
+int			should_exit(t_desk *d);
 int			eat(t_philo *p);
 int			sleep_and_think(t_philo *p);
 int			should_eat_urgently(t_philo *p);
 void		handle_single_philosopher(t_philo *p);
 int			handle_philosopher_actions(t_philo *p, long long *think_time);
 int			take_forks(t_philo *p);
+void		wait_for_threads(t_desk *d);
+void		release_forks(t_philo *p);
+void		release_forks(t_philo *p);
+int			should_exit(t_desk *d);
+int			try_take_forks(t_philo *p);
+void		lock_forks(t_philo *p);
+int			take_forks(t_philo *p);
+void		start_trick(t_philo *p, long long eat_time);
+int			allocate_forks(t_desk *d);
 #endif

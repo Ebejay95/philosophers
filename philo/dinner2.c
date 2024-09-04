@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dinner2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:32:44 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/03 15:58:22 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/04 07:05:16 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ void	precise_sleep(long long time, t_desk *d)
 	long long	now;
 
 	start = my_now();
-	while (!check_end(d))
+	while (!should_exit(d))
 	{
 		now = my_now();
 		if (now - start >= time)
 			break ;
 		usleep(100);
+		if (should_exit(d))
+			break ;
 	}
 }
 

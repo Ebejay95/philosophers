@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+         #
+#    By: jeberle <jeberle@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/21 11:50:17 by jeberle           #+#    #+#              #
-#    Updated: 2024/09/03 16:04:30 by jeberle          ###   ########.fr        #
+#    Updated: 2024/09/04 07:40:17 by jeberle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,8 +75,12 @@ SRCS=	philo.c \
 		dinner.c \
 		dinner2.c \
 		dinner3.c \
+		dinner4.c \
+		dinner5.c \
 		helpers.c \
 		helpers2.c \
+		helpers3.c \
+		helpers4.c \
 		monitor.c \
 		inputval.c \
 		inputval2.c \

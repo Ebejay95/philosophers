@@ -3,39 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 19:47:06 by jonathanebe       #+#    #+#             */
-/*   Updated: 2024/09/03 16:04:20 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/04 07:19:57 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
+void	wait_for_threads(t_desk *d)
+{
+	int	i;
+
+	if (d->monitor)
+		pthread_join(d->monitor, NULL);
+	i = 0;
+	while (i < d->philo_amount)
+	{
+		if (d->phls_ini && d->phls_ini[i])
+			pthread_join(d->phls[i].thread, NULL);
+		i++;
+	}
+}
+
+void	safe_mutex_destroy(pthread_mutex_t *mutex)
+{
+	if (pthread_mutex_trylock(mutex) == 0)
+	{
+		pthread_mutex_unlock(mutex);
+		pthread_mutex_destroy(mutex);
+	}
+}
+
 int	end(t_desk *d)
 {
 	int	i;
 
-	pthread_join(d->monitor, NULL);
+	wait_for_threads(d);
 	i = 0;
 	while (i < d->philo_amount)
 	{
-		if (d->phls_ini[i])
-			pthread_join(d->phls[i].thread, NULL);
-		if (d->forks_ini[i])
-			pthread_mutex_destroy(&d->forks[i].fork);
-		if (d->phls_ini[i])
-			pthread_mutex_destroy(&d->phls[i].state_mutex);
+		if (d->forks_ini && d->forks_ini[i])
+			safe_mutex_destroy(&d->forks[i].fork);
+		if (d->phls_ini && d->phls_ini[i])
+			safe_mutex_destroy(&d->phls[i].state_mutex);
 		i++;
 	}
-	pthread_mutex_destroy(&d->end_mutex);
-	pthread_mutex_destroy(&d->write_mutex);
-	pthread_mutex_destroy(&d->butler_mutex);
+	safe_mutex_destroy(&d->end_mutex);
+	safe_mutex_destroy(&d->write_mutex);
+	safe_mutex_destroy(&d->butler_mutex);
+	safe_mutex_destroy(&d->first_iteration_mutex);
 	free(d->forks);
 	free(d->forks_ini);
 	free(d->phls);
 	free(d->phls_ini);
-	free(d->fork_status);
+	free(d->fstate);
 	return (0);
 }
 

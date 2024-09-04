@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:45:19 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/03 15:07:27 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/04 07:13:26 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ int	start(t_desk *d)
 		args->philo = &d->phls[i];
 		args->desk = d;
 		if (pthread_create(&d->phls[i].thread, NULL, philo, args) != 0)
-			return (free(args), set_end(d), 1);
+		{
+			free(args);
+			set_end(d);
+			return (1);
+		}
 		i++;
 	}
 	if (pthread_create(&d->monitor, NULL, run_monitor, d) != 0)
@@ -38,13 +42,20 @@ int	start(t_desk *d)
 int	main(int argc, char **argv)
 {
 	t_desk	d;
+	int		setup_result;
 
 	if (retreive_input(&d, argc, argv) == 0)
 	{
-		if (setup(&d) != 0)
-			return (1);
-		if (start(&d) != 0)
-			return (1);
+		setup_result = setup(&d);
+		if (setup_result == 0)
+		{
+			if (start(&d) == 0)
+			{
+				while (!check_end(&d))
+					usleep(1000);
+				set_end(&d);
+			}
+		}
 		end(&d);
 	}
 	else
@@ -52,5 +63,5 @@ int	main(int argc, char **argv)
 		printf("invalid input\n");
 		return (1);
 	}
-	return (0);
+	return (setup_result != 0);
 }
