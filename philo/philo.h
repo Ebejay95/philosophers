@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeberle <jeberle@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/04 07:37:41 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/06 14:50:36 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,6 @@ int			should_exit(t_desk *d);
 int			try_take_forks(t_philo *p);
 void		lock_forks(t_philo *p);
 int			take_forks(t_philo *p);
-void		start_trick(t_philo *p, long long eat_time);
+void		start_trick(t_philo *p);
 int			allocate_forks(t_desk *d);
 #endif

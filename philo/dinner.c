@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dinner.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeberle <jeberle@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 19:52:11 by jonathanebe       #+#    #+#             */
-/*   Updated: 2024/09/04 07:30:08 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/06 14:50:31 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	initialize_philosopher(t_philo **p, t_desk **desk, t_philo_args *args)
 	*p = args->philo;
 	*desk = args->desk;
 	free(args);
-	start_trick(*p, (*desk)->eat_time);
+	start_trick(*p);
 }
 
 int	handle_single_philosopher_case(t_philo *p, t_desk *desk)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dinner5.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeberle <jeberle@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 07:30:16 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/04 07:30:25 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/06 15:27:20 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,14 @@ int	take_forks(t_philo *p)
 	}
 }
 
-void	start_trick(t_philo *p, long long eat_time)
+void	start_trick(t_philo *p)
 {
 	pthread_mutex_lock(&p->desk->first_iteration_mutex);
 	if (p->id % 2 == 0)
 	{
 		log_action(p, "is thinking");
 		pthread_mutex_unlock(&p->desk->first_iteration_mutex);
-		usleep(eat_time / 2);
+		usleep(100);
 	}
 	else
 	{
