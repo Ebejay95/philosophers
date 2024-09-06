@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dinner4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeberle <jeberle@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 07:16:19 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/04 07:19:57 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/06 21:22:39 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	release_forks(t_philo *p)
 	pthread_mutex_unlock(&p->right_fork->fork);
 	pthread_mutex_unlock(&p->left_fork->fork);
 	pthread_mutex_lock(&p->desk->butler_mutex);
-	p->desk->fstate[p->left_fork->id] = 0;
-	p->desk->fstate[p->right_fork->id] = 0;
+	//p->desk->fstate[p->left_fork->id] = 0;
+	//p->desk->fstate[p->right_fork->id] = 0;
 	pthread_mutex_unlock(&p->desk->butler_mutex);
 }
 

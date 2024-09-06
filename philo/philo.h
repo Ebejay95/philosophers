@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/06 14:50:36 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/06 21:22:30 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ struct s_desk
 	pthread_t		monitor;
 	pthread_mutex_t	first_iteration_mutex;
 	pthread_mutex_t	write_mutex;
-	int				*fstate;
 	pthread_mutex_t	butler_mutex;
 	pthread_mutex_t	end_mutex;
 	int				all_ate;

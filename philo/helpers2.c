@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeberle <jeberle@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:03:45 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/04 07:36:07 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/06 21:23:43 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	setup_philo_data(t_desk *d, int i)
 	d->phls[i].desk = d;
 	d->phls[i].left_fork = &d->forks[i];
 	d->phls[i].right_fork = &d->forks[(i + 1) % d->philo_amount];
-	d->fstate[i] = 0;
+	//d->fstate[i] = 0;
 }
 
 int	setup_philos_and_forks(t_desk *d)

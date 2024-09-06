@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeberle <jeberle@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 19:47:06 by jonathanebe       #+#    #+#             */
-/*   Updated: 2024/09/04 07:19:57 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/06 21:26:30 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	wait_for_threads(t_desk *d)
 
 void	safe_mutex_destroy(pthread_mutex_t *mutex)
 {
-	if (pthread_mutex_trylock(mutex) == 0)
+	if (pthread_mutex_trylock(mutex) == 0) // wegmachen
 	{
 		pthread_mutex_unlock(mutex);
 		pthread_mutex_destroy(mutex);
@@ -58,7 +58,7 @@ int	end(t_desk *d)
 	free(d->forks_ini);
 	free(d->phls);
 	free(d->phls_ini);
-	free(d->fstate);
+	//free(d->fstate);
 	return (0);
 }
 

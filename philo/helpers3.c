@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeberle <jeberle@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 07:35:47 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/04 07:36:54 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/06 21:25:07 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,24 @@
 static int	allocate_philosophers(t_desk *d)
 {
 	d->phls = malloc(sizeof(t_philo) * d->philo_amount);
-	d->phls_ini = calloc(d->philo_amount, sizeof(int));
-	if (!d->phls || !d->phls_ini)
+	if (!d->phls)
+		return (1);
+	d->phls_ini = malloc(d->philo_amount * sizeof(int));
+	if (!d->phls_ini)
 	{
-		free(d->phls);
 		free(d->phls_ini);
 		return (1);
 	}
 	return (0);
 }
 
-static int	allocate_fork_state(t_desk *d)
-{
-	d->fstate = malloc(sizeof(int) * d->philo_amount);
-	if (!d->fstate)
-		return (1);
-	return (0);
-}
+// static int	allocate_fork_state(t_desk *d)
+// {
+// 	d->fstate = malloc(sizeof(int) * d->philo_amount);
+// 	if (!d->fstate)
+// 		return (1);
+// 	return (0);
+// }
 
 static int	initialize_mutexes(t_desk *d)
 {
@@ -49,7 +50,7 @@ static void	cleanup_on_error(t_desk *d)
 	free(d->forks_ini);
 	free(d->phls);
 	free(d->phls_ini);
-	free(d->fstate);
+	//free(d->fstate);
 }
 
 int	setup(t_desk *d)
@@ -63,14 +64,14 @@ int	setup(t_desk *d)
 		free(d->forks_ini);
 		return (1);
 	}
-	if (allocate_fork_state(d) != 0)
-	{
-		free(d->forks);
-		free(d->forks_ini);
-		free(d->phls);
-		free(d->phls_ini);
-		return (1);
-	}
+	// if (allocate_fork_state(d) != 0)
+	// {
+	// 	free(d->forks);
+	// 	free(d->forks_ini);
+	// 	free(d->phls);
+	// 	free(d->phls_ini);
+	// 	return (1);
+	// }
 	if (initialize_mutexes(d) != 0)
 	{
 		cleanup_on_error(d);

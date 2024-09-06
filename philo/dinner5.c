@@ -6,36 +6,36 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 07:30:16 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/06 17:38:12 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/06 21:23:31 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
-int	try_take_forks(t_philo *p)
-{
-	if (p->id % 2 == 0)
-	{
-		if (p->desk->fstate[p->left_fork->id] == 0
-			&& p->desk->fstate[p->right_fork->id] == 0)
-		{
-			p->desk->fstate[p->left_fork->id] = 1;
-			p->desk->fstate[p->right_fork->id] = 1;
-			return (1);
-		}
-	}
-	else
-	{
-		if (p->desk->fstate[p->right_fork->id] == 0
-			&& p->desk->fstate[p->left_fork->id] == 0)
-		{
-			p->desk->fstate[p->right_fork->id] = 1;
-			p->desk->fstate[p->left_fork->id] = 1;
-			return (1);
-		}
-	}
-	return (0);
-}
+// int	try_take_forks(t_philo *p)
+// {
+// 	if (p->id % 2 == 0)
+// 	{
+// 		if (p->desk->fstate[p->left_fork->id] == 0
+// 			&& p->desk->fstate[p->right_fork->id] == 0)
+// 		{
+// 			p->desk->fstate[p->left_fork->id] = 1;
+// 			p->desk->fstate[p->right_fork->id] = 1;
+// 			return (1);
+// 		}
+// 	}
+// 	else
+// 	{
+// 		if (p->desk->fstate[p->right_fork->id] == 0
+// 			&& p->desk->fstate[p->left_fork->id] == 0)
+// 		{
+// 			p->desk->fstate[p->right_fork->id] = 1;
+// 			p->desk->fstate[p->left_fork->id] = 1;
+// 			return (1);
+// 		}
+// 	}
+// 	return (0);
+// }
 
 void	lock_forks(t_philo *p)
 {
@@ -69,12 +69,12 @@ int	take_forks(t_philo *p)
 	pthread_mutex_lock(&p->desk->butler_mutex);
 	while (1)
 	{
-		if (try_take_forks(p))
-		{
+		//if (try_take_forks(p))
+		//{
 			pthread_mutex_unlock(&p->desk->butler_mutex);
 			lock_forks(p);
-			return (0);
-		}
+		//	return (0);
+		//}
 		if (check_end(p->desk))
 		{
 			pthread_mutex_unlock(&p->desk->butler_mutex);
