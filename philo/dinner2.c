@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dinner2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeberle <jeberle@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:32:44 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/04 07:05:16 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/06 17:37:53 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	precise_sleep(long long time, t_desk *d)
 		now = my_now();
 		if (now - start >= time)
 			break ;
-		usleep(100);
+		usleep(500);
 		if (should_exit(d))
 			break ;
 	}
@@ -49,8 +49,10 @@ void	calculate_think_time(t_philo *p, long long *think_time)
 void	think_in_start(t_philo *p)
 {
 	log_action(p, "is thinking");
-	precise_sleep(p->desk->eat_time, p->desk);
+	pthread_mutex_lock(&p->desk->first_iteration_mutex);
 	p->desk->first_iteration = 0;
+	pthread_mutex_unlock(&p->desk->first_iteration_mutex);
+	precise_sleep(p->desk->eat_time, p->desk);
 }
 
 int	check_end(t_desk *d)
