@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:32:44 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/06 17:37:53 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/09 15:18:14 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,32 +27,6 @@ void	precise_sleep(long long time, t_desk *d)
 		if (should_exit(d))
 			break ;
 	}
-}
-
-void	calculate_think_time(t_philo *p, long long *think_time)
-{
-	long long	eat_sleep_time;
-	long long	cycle_time;
-
-	eat_sleep_time = p->desk->eat_time + p->desk->sleep_time;
-	cycle_time = eat_sleep_time * 2;
-	if (cycle_time >= p->desk->die_time)
-		*think_time = (p->desk->die_time - p->desk->eat_time) / 2;
-	else
-		*think_time = (p->desk->die_time - eat_sleep_time) / 2;
-	if (*think_time < 0)
-		*think_time = 0;
-	else if (*think_time > p->desk->die_time / 4)
-		*think_time = p->desk->die_time / 4;
-}
-
-void	think_in_start(t_philo *p)
-{
-	log_action(p, "is thinking");
-	pthread_mutex_lock(&p->desk->first_iteration_mutex);
-	p->desk->first_iteration = 0;
-	pthread_mutex_unlock(&p->desk->first_iteration_mutex);
-	precise_sleep(p->desk->eat_time, p->desk);
 }
 
 int	check_end(t_desk *d)

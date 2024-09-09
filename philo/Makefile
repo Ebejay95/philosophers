@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jeberle <jeberle@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/21 11:50:17 by jeberle           #+#    #+#              #
-#    Updated: 2024/09/04 07:40:17 by jeberle          ###   ########.fr        #
+#    Updated: 2024/09/09 14:44:50 by jeberle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,18 +72,16 @@ vpath %.d $(DEP_DIR)
 #------------------------------------------------------------------------------#
 
 SRCS=	philo.c \
+		ft_atol.c \
 		dinner.c \
 		dinner2.c \
 		dinner3.c \
-		dinner4.c \
-		dinner5.c \
 		helpers.c \
-		helpers2.c \
-		helpers3.c \
-		helpers4.c \
+		end.c \
+		setup.c \
+		setup_philos_and_forks.c \
 		monitor.c \
-		inputval.c \
-		inputval2.c \
+		retreive_input.c \
 
 #------------------------------------------------------------------------------#
 #--------------                      OBJECTS                      -------------#

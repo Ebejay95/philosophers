@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeberle <jeberle@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:45:19 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/04 07:13:26 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/09 15:58:34 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	start(t_desk *d)
 	}
 	if (pthread_create(&d->monitor, NULL, run_monitor, d) != 0)
 		return (set_end(d), 1);
+	wait_for_threads(d);
 	return (0);
 }
 
@@ -49,12 +50,15 @@ int	main(int argc, char **argv)
 		setup_result = setup(&d);
 		if (setup_result == 0)
 		{
+			if (pthread_mutex_init(&d.forks_mutex, NULL) != 0)
+				return (1);
 			if (start(&d) == 0)
 			{
 				while (!check_end(&d))
 					usleep(1000);
 				set_end(&d);
 			}
+			pthread_mutex_destroy(&d.forks_mutex);
 		}
 		end(&d);
 	}

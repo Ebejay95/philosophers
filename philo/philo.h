@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/06 21:22:30 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/09 15:19:06 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,13 @@
 
 typedef struct s_desk	t_desk;
 
-typedef struct s_fork
-{
-	pthread_mutex_t	fork;
-	int				id;
-}	t_fork;
-
 typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
-	int				index;
-	t_fork			*right_fork;
-	t_fork			*left_fork;
+	int				needs_forks;
+	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*left_fork;
 	long			meals;
 	int				done;
 	long			had_meal_time;
@@ -70,17 +64,13 @@ struct s_desk
 	long			eat_time;
 	long			sleep_time;
 	long			meal_amount;
-	t_fork			*forks;
-	int				*forks_ini;
+	pthread_mutex_t	forks_mutex;
+	pthread_mutex_t	*forks;
 	t_philo			*phls;
 	int				*phls_ini;
-	int				first_iteration;
 	pthread_t		monitor;
-	pthread_mutex_t	first_iteration_mutex;
 	pthread_mutex_t	write_mutex;
-	pthread_mutex_t	butler_mutex;
 	pthread_mutex_t	end_mutex;
-	int				all_ate;
 };
 
 // #############################################################################
@@ -88,7 +78,6 @@ struct s_desk
 // #############################################################################
 int			ft_strcmp(const char *s1, const char *s2);
 int			ft_isdigit(int c);
-int			ft_isspace(char c);
 long		ft_atol(const char *str);
 long long	my_now(void);
 void		check_numeric(int *valid, char *argument);
@@ -105,25 +94,11 @@ void		*philo(void *p_point);
 void		log_action(t_philo *p, char *action);
 int			check_end(t_desk *d);
 void		precise_sleep(long long time, t_desk *d);
-void		calculate_think_time(t_philo *p, long long *think_time);
-void		think_in_start(t_philo *p);
 int			check_end(t_desk *d);
 void		set_end(t_desk *d);
-void		clean_exit(t_desk *d);
 int			should_exit(t_desk *d);
 int			eat(t_philo *p);
-int			sleep_and_think(t_philo *p);
-int			should_eat_urgently(t_philo *p);
 void		handle_single_philosopher(t_philo *p);
-int			handle_philosopher_actions(t_philo *p, long long *think_time);
-int			take_forks(t_philo *p);
 void		wait_for_threads(t_desk *d);
-void		release_forks(t_philo *p);
-void		release_forks(t_philo *p);
-int			should_exit(t_desk *d);
-int			try_take_forks(t_philo *p);
-void		lock_forks(t_philo *p);
-int			take_forks(t_philo *p);
 void		start_trick(t_philo *p);
-int			allocate_forks(t_desk *d);
 #endif

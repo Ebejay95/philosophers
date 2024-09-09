@@ -1,16 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   inputval2.c                                        :+:      :+:    :+:   */
+/*   retreive_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:50:14 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/06 17:22:56 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/09 14:11:16 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
+
+void	check_numeric(int *valid, char *argument)
+{
+	int	i;
+
+	if (!ft_strcmp(argument, ""))
+		*valid = 1;
+	if (*valid == 0)
+	{
+		i = 0;
+		while (argument[i] == 43)
+			i++;
+		while (*argument != '\0' && ft_isdigit(argument[i]))
+			i++;
+		if (argument[i] == '\0')
+			*valid = 0;
+		else
+			*valid = 1;
+	}
+}
 
 int	check_numerics(int argc, char **argv)
 {

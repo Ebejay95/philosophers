@@ -1,65 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpers.c                                          :+:      :+:    :+:   */
+/*   my_now.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/29 19:47:06 by jonathanebe       #+#    #+#             */
-/*   Updated: 2024/09/06 21:26:30 by jeberle          ###   ########.fr       */
+/*   Created: 2024/08/29 14:48:17 by jeberle           #+#    #+#             */
+/*   Updated: 2024/09/09 14:43:34 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
-void	wait_for_threads(t_desk *d)
+long long	my_now(void)
 {
-	int	i;
+	struct timeval	now;
+	long long		milliseconds;
 
-	if (d->monitor)
-		pthread_join(d->monitor, NULL);
-	i = 0;
-	while (i < d->philo_amount)
-	{
-		if (d->phls_ini && d->phls_ini[i])
-			pthread_join(d->phls[i].thread, NULL);
-		i++;
-	}
-}
-
-void	safe_mutex_destroy(pthread_mutex_t *mutex)
-{
-	if (pthread_mutex_trylock(mutex) == 0) // wegmachen
-	{
-		pthread_mutex_unlock(mutex);
-		pthread_mutex_destroy(mutex);
-	}
-}
-
-int	end(t_desk *d)
-{
-	int	i;
-
-	wait_for_threads(d);
-	i = 0;
-	while (i < d->philo_amount)
-	{
-		if (d->forks_ini && d->forks_ini[i])
-			safe_mutex_destroy(&d->forks[i].fork);
-		if (d->phls_ini && d->phls_ini[i])
-			safe_mutex_destroy(&d->phls[i].state_mutex);
-		i++;
-	}
-	safe_mutex_destroy(&d->end_mutex);
-	safe_mutex_destroy(&d->write_mutex);
-	safe_mutex_destroy(&d->butler_mutex);
-	safe_mutex_destroy(&d->first_iteration_mutex);
-	free(d->forks);
-	free(d->forks_ini);
-	free(d->phls);
-	free(d->phls_ini);
-	//free(d->fstate);
-	return (0);
+	gettimeofday(&now, NULL);
+	milliseconds = (now.tv_sec * 1000LL) + (now.tv_usec / 1000);
+	return (milliseconds);
 }
 
 int	ft_strcmp(const char *s1, const char *s2)
