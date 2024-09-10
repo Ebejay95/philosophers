@@ -6,21 +6,12 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/09 15:19:06 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/10 15:04:58 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
-
-# define RED "\x1b[31m"
-# define G "\033[0;32m"
-# define B "\033[0;34m"
-# define Y "\033[0;93m"
-# define C "\033[0;36m"
-# define M "\033[0;35m"
-# define W "\033[0;97m"
-# define D "\x1b[0m"
 
 /* Librarys*/
 # include <unistd.h>
@@ -71,6 +62,8 @@ struct s_desk
 	pthread_t		monitor;
 	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	end_mutex;
+	int				monitor_should_exit;
+	pthread_mutex_t	monitor_mutex;
 };
 
 // #############################################################################
@@ -101,4 +94,6 @@ int			eat(t_philo *p);
 void		handle_single_philosopher(t_philo *p);
 void		wait_for_threads(t_desk *d);
 void		start_trick(t_philo *p);
+int			take_forks(t_philo *p);
+void		release_forks(t_philo *p);
 #endif

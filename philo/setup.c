@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 07:35:47 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/09 15:58:08 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/10 14:59:12 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,15 @@ static void	cleanup_on_error(t_desk *d)
 int	setup(t_desk *d)
 {
 	d->end = 0;
+	d->monitor_should_exit = 0;
 	if (allocate_philosophers(d) != 0)
 		return (1);
 	if (initialize_mutexes(d) != 0)
+	{
+		cleanup_on_error(d);
+		return (1);
+	}
+	if (pthread_mutex_init(&d->monitor_mutex, NULL) != 0)
 	{
 		cleanup_on_error(d);
 		return (1);

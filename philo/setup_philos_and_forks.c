@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:03:45 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/09 16:27:26 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/10 14:59:10 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static void	setup_philo_data(t_desk *d, int i)
 	d->phls[i].done = 0;
 	d->phls[i].had_meal_time = d->now;
 	d->phls[i].desk = d;
-	d->phls[i].left_fork = NULL;
-	d->phls[i].right_fork = NULL;
+	d->phls[i].left_fork = &d->forks[i];
+	d->phls[i].right_fork = &d->forks[(i + 1) % d->philo_amount];
 }
 
 int	setup_philos_and_forks(t_desk *d)

@@ -6,7 +6,7 @@
 #    By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/21 11:50:17 by jeberle           #+#    #+#              #
-#    Updated: 2024/09/09 14:44:50 by jeberle          ###   ########.fr        #
+#    Updated: 2024/09/10 15:00:29 by jeberle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,12 +73,13 @@ vpath %.d $(DEP_DIR)
 
 SRCS=	philo.c \
 		ft_atol.c \
-		dinner.c \
-		dinner2.c \
-		dinner3.c \
 		helpers.c \
 		end.c \
+		forks.c \
 		setup.c \
+		philo_actions.c \
+		procedure.c \
+		philo_routine.c \
 		setup_philos_and_forks.c \
 		monitor.c \
 		retreive_input.c \

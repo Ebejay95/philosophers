@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dinner.c                                           :+:      :+:    :+:   */
+/*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 19:52:11 by jonathanebe       #+#    #+#             */
-/*   Updated: 2024/09/09 16:28:11 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/10 14:59:02 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ void	initialize_philosopher(t_philo **p, t_desk **desk, t_philo_args *args)
 	*p = args->philo;
 	*desk = args->desk;
 	free(args);
+	pthread_mutex_lock(&(*p)->state_mutex);
+	(*p)->had_meal_time = my_now();
+	pthread_mutex_unlock(&(*p)->state_mutex);
 	start_trick(*p);
 }
 
@@ -49,30 +52,17 @@ int	philosopher_routine(t_philo *p, t_desk *desk)
 	while (!should_exit(desk))
 	{
 		log_action(p, "is thinking");
-		if (p->id % 2 == 0)
+		usleep(1000);
+		if (take_forks(p) != 0)
+			return (1);
+		if (eat(p) != 0)
 		{
-			pthread_mutex_lock(p->left_fork);
-			log_action(p, "has taken a fork");
-			pthread_mutex_lock(p->right_fork);
-			log_action(p, "has taken a fork");
+			release_forks(p);
+			return (1);
 		}
-		else
-		{
-			pthread_mutex_lock(p->right_fork);
-			log_action(p, "has taken a fork");
-			pthread_mutex_lock(p->left_fork);
-			log_action(p, "has taken a fork");
-		}
-		if (eat(p) != 0 || should_exit(desk))
-		{
-			pthread_mutex_unlock(p->left_fork);
-			pthread_mutex_unlock(p->right_fork);
-			break ;
-		}
-		pthread_mutex_unlock(p->left_fork);
-		pthread_mutex_unlock(p->right_fork);
-		if (sleep_action(p) != 0 || should_exit(desk))
-			break ;
+		release_forks(p);
+		if (sleep_action(p) != 0)
+			return (1);
 	}
 	return (0);
 }

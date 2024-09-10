@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:45:19 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/09 15:58:34 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/10 14:59:04 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,17 @@ int	start(t_desk *d)
 			return (set_end(d), 1);
 		args->philo = &d->phls[i];
 		args->desk = d;
+		d->phls[i].had_meal_time = d->now;
 		if (pthread_create(&d->phls[i].thread, NULL, philo, args) != 0)
 		{
 			free(args);
-			set_end(d);
-			return (1);
+			return (set_end(d), 1);
 		}
 		i++;
 	}
 	if (pthread_create(&d->monitor, NULL, run_monitor, d) != 0)
 		return (set_end(d), 1);
+	usleep(100);
 	wait_for_threads(d);
 	return (0);
 }
@@ -63,9 +64,6 @@ int	main(int argc, char **argv)
 		end(&d);
 	}
 	else
-	{
-		printf("invalid input\n");
-		return (1);
-	}
+		return (printf("invalid input\n"));
 	return (setup_result != 0);
 }
