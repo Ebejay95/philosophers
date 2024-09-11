@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 19:51:02 by jonathanebe       #+#    #+#             */
-/*   Updated: 2024/09/10 14:58:57 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/11 16:19:20 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	*run_monitor(void *d_point)
 			break ;
 		if (check_philosophers(d))
 			return (NULL);
-		usleep(100);
+		usleep(1000);
 	}
 	return (NULL);
 }

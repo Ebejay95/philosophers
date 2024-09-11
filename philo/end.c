@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 19:47:06 by jonathanebe       #+#    #+#             */
-/*   Updated: 2024/09/11 10:49:13 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/11 15:37:54 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,6 @@ void	wait_for_threads(t_desk *d)
 	}
 }
 
-void	safe_mutex_destroy(pthread_mutex_t *mutex)
-{
-	pthread_mutex_destroy(mutex);
-}
-
 int	end(t_desk *d)
 {
 	int	i;
@@ -67,12 +62,12 @@ int	end(t_desk *d)
 	i = 0;
 	while (i < d->philo_amount)
 	{
-		safe_mutex_destroy(&d->forks[i]);
-		safe_mutex_destroy(&d->phls[i].state_mutex);
+		pthread_mutex_destroy(&d->forks[i]);
+		pthread_mutex_destroy(&d->phls[i].state_mutex);
 		i++;
 	}
-	safe_mutex_destroy(&d->end_mutex);
-	safe_mutex_destroy(&d->write_mutex);
-	safe_mutex_destroy(&d->monitor_mutex);
+	pthread_mutex_destroy(&d->end_mutex);
+	pthread_mutex_destroy(&d->write_mutex);
+	pthread_mutex_destroy(&d->monitor_mutex);
 	return (0);
 }

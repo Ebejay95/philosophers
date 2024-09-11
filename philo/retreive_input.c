@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:50:14 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/10 14:59:08 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/11 15:58:36 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,9 @@ void	check_numeric(int *valid, char *argument)
 		i = 0;
 		while (argument[i] == 43)
 			i++;
-		while (*argument != '\0' && ft_isdigit(argument[i]))
+		while (argument[i] != '\0' && ft_isdigit(argument[i]))
 			i++;
-		if (argument[i] == '\0')
-			*valid = 0;
-		else
+		if (argument[i] != '\0')
 			*valid = 1;
 	}
 }
@@ -35,19 +33,12 @@ void	check_numeric(int *valid, char *argument)
 int	check_numerics(int argc, char **argv)
 {
 	int	valid;
+	int	i;
 
+	i = 0;
 	valid = 0;
-	if (argc == 6 || argc == 5)
-	{
-		check_numeric(&valid, argv[1]);
-		check_numeric(&valid, argv[2]);
-		check_numeric(&valid, argv[3]);
-		check_numeric(&valid, argv[4]);
-		if (argc == 6)
-		{
-			check_numeric(&valid, argv[5]);
-		}
-	}
+	while (++i < argc)
+		check_numeric(&valid, argv[i]);
 	return (valid);
 }
 

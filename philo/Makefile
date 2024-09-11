@@ -6,7 +6,7 @@
 #    By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/21 11:50:17 by jeberle           #+#    #+#              #
-#    Updated: 2024/09/10 15:00:29 by jeberle          ###   ########.fr        #
+#    Updated: 2024/09/11 14:33:57 by jeberle          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ CFLAGS=-Wall -Wextra -Werror
 LDFLAGS=
 
 ifeq ($(DEBUG), 1)
-	CFLAGS += -fsanitize=address -g
+	CFLAGS += -g3
 endif
 
 DEPFLAGS=-MMD -MP

@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/11 10:47:51 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/11 15:40:37 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
 	long			meals;
+	long			die_time;
+	long			eat_time;
 	int				done;
 	long			had_meal_time;
 	t_desk			*desk;
@@ -42,8 +44,8 @@ typedef struct s_philo
 
 typedef struct s_philo_args
 {
-	t_philo	*philo;
-	t_desk	*desk;
+	t_philo		*philo;
+	t_desk		*desk;
 }	t_philo_args;
 
 struct s_desk
@@ -55,7 +57,6 @@ struct s_desk
 	long			eat_time;
 	long			sleep_time;
 	long			meal_amount;
-	pthread_mutex_t	forks_mutex;
 	pthread_mutex_t	forks[200];
 	t_philo			phls[200];
 	pthread_t		monitor;

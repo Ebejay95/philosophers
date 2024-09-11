@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:35:25 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/10 14:59:06 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/11 16:30:39 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,9 @@ int	should_exit(t_desk *d)
 
 void	start_trick(t_philo *p)
 {
-	if (p->id % 2 == 0)
-	{
-		log_action(p, "is thinking");
-	}
-	else
-	{
-		usleep(500);
-		log_action(p, "is thinking");
-	}
+	log_action(p, "is thinking");
+	if (p->id % 2 != 0)
+		usleep(10000);
 }
 
 void	precise_sleep(long long time, t_desk *d)
@@ -52,7 +46,7 @@ void	precise_sleep(long long time, t_desk *d)
 		now = my_now();
 		if (now - start >= time)
 			break ;
-		usleep(1000);
+		usleep(500);
 		if (should_exit(d))
 			break ;
 	}
