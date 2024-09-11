@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:03:45 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/10 14:59:10 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/11 10:47:14 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ static int	init_philo_mutex(t_desk *d, int i)
 {
 	if (pthread_mutex_init(&d->phls[i].state_mutex, NULL) != 0)
 	{
-		d->phls_ini[i] = 0;
 		return (1);
 	}
-	d->phls_ini[i] = 1;
 	return (0);
 }
 
@@ -45,9 +43,6 @@ int	setup_philos_and_forks(t_desk *d)
 {
 	int	i;
 
-	d->forks = malloc(sizeof(pthread_mutex_t) * d->philo_amount);
-	if (!d->forks)
-		return (1);
 	i = 0;
 	while (i < d->philo_amount)
 	{

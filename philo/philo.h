@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/10 15:04:58 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/11 10:47:51 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,8 @@ struct s_desk
 	long			sleep_time;
 	long			meal_amount;
 	pthread_mutex_t	forks_mutex;
-	pthread_mutex_t	*forks;
-	t_philo			*phls;
-	int				*phls_ini;
+	pthread_mutex_t	forks[200];
+	t_philo			phls[200];
 	pthread_t		monitor;
 	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	end_mutex;

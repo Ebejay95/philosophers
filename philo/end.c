@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 19:47:06 by jonathanebe       #+#    #+#             */
-/*   Updated: 2024/09/10 14:58:49 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/11 10:49:13 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,11 @@ int	end(t_desk *d)
 	while (i < d->philo_amount)
 	{
 		safe_mutex_destroy(&d->forks[i]);
-		if (d->phls_ini && d->phls_ini[i])
-			safe_mutex_destroy(&d->phls[i].state_mutex);
+		safe_mutex_destroy(&d->phls[i].state_mutex);
 		i++;
 	}
 	safe_mutex_destroy(&d->end_mutex);
 	safe_mutex_destroy(&d->write_mutex);
 	safe_mutex_destroy(&d->monitor_mutex);
-	free(d->phls_ini);
-	return (free(d->phls), free(d->forks), 0);
+	return (0);
 }
