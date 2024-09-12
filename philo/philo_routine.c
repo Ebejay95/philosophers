@@ -6,14 +6,17 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 19:52:11 by jonathanebe       #+#    #+#             */
-/*   Updated: 2024/09/11 16:26:51 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/12 08:46:42 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
-void	initialize_philosopher(t_philo *const *p)
+void	initialize_philosopher(t_philo **p, t_desk **desk, t_philo_args *args)
 {
+	*p = args->philo;
+	*desk = args->desk;
+	free(args);
 	pthread_mutex_lock(&(*p)->state_mutex);
 	(*p)->had_meal_time = my_now();
 	pthread_mutex_unlock(&(*p)->state_mutex);
@@ -49,6 +52,7 @@ int	philosopher_routine(t_philo *p, t_desk *desk)
 	while (!should_exit(desk))
 	{
 		log_action(p, "is thinking");
+		usleep(1000);
 		if (take_forks(p) != 0)
 			return (1);
 		if (eat(p) != 0)
@@ -65,12 +69,10 @@ int	philosopher_routine(t_philo *p, t_desk *desk)
 
 void	*philo(void *arg)
 {
-	t_philo		*p;
-	t_desk		*desk;
+	t_philo	*p;
+	t_desk	*desk;
 
-	p = arg;
-	desk = p->desk;
-	initialize_philosopher(&p);
+	initialize_philosopher(&p, &desk, (t_philo_args *)arg);
 	while (!should_exit(desk))
 	{
 		if (philosopher_routine(p, desk))

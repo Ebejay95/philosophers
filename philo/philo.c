@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 14:45:19 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/11 16:28:02 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/12 08:46:04 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,29 @@
 
 int	start(t_desk *d)
 {
-	int	i;
+	int				i;
+	t_philo_args	*args;
 
 	d->now = my_now();
 	i = 0;
 	while (i < d->philo_amount)
 	{
-		d->phls[i].had_meal_time = d->now;
-		if (pthread_create(&d->phls[i].thread, NULL, philo, &d->phls[i]) != 0)
+		args = malloc(sizeof(t_philo_args));
+		if (!args)
 			return (set_end(d), 1);
-		usleep(60);
+		args->philo = &d->phls[i];
+		args->desk = d;
+		d->phls[i].had_meal_time = d->now;
+		if (pthread_create(&d->phls[i].thread, NULL, philo, args) != 0)
+		{
+			free(args);
+			return (set_end(d), 1);
+		}
 		i++;
 	}
 	if (pthread_create(&d->monitor, NULL, run_monitor, d) != 0)
 		return (set_end(d), 1);
-	usleep(500);
+	usleep(100);
 	wait_for_threads(d);
 	return (0);
 }
