@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 11:56:38 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/11 15:40:37 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/12 11:17:27 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_philo
 	long			die_time;
 	long			eat_time;
 	int				done;
+	int				first_think;
 	long			had_meal_time;
 	t_desk			*desk;
 	pthread_mutex_t	state_mutex;
@@ -64,6 +65,9 @@ struct s_desk
 	pthread_mutex_t	end_mutex;
 	int				monitor_should_exit;
 	pthread_mutex_t	monitor_mutex;
+	pthread_mutex_t	flag_mutex;
+	int				flag_ready;
+
 };
 
 // #############################################################################
@@ -93,7 +97,6 @@ int			should_exit(t_desk *d);
 int			eat(t_philo *p);
 void		handle_single_philosopher(t_philo *p);
 void		wait_for_threads(t_desk *d);
-void		start_trick(t_philo *p);
 int			take_forks(t_philo *p);
 void		release_forks(t_philo *p);
 #endif

@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 19:47:06 by jonathanebe       #+#    #+#             */
-/*   Updated: 2024/09/11 15:37:54 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/12 10:26:05 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ int	end(t_desk *d)
 	pthread_mutex_destroy(&d->end_mutex);
 	pthread_mutex_destroy(&d->write_mutex);
 	pthread_mutex_destroy(&d->monitor_mutex);
+	pthread_mutex_destroy(&d->flag_mutex);
 	return (0);
 }

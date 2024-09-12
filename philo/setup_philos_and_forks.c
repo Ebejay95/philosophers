@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 16:03:45 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/11 15:41:17 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/12 11:15:59 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	setup_philo_data(t_desk *d, int i)
 	d->phls[i].desk = d;
 	d->phls[i].left_fork = &d->forks[i];
 	d->phls[i].right_fork = &d->forks[(i + 1) % d->philo_amount];
+	d->phls[i].first_think = 1;
 }
 
 int	setup_philos_and_forks(t_desk *d)

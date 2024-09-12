@@ -6,7 +6,7 @@
 /*   By: jeberle <jeberle@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 15:35:25 by jeberle           #+#    #+#             */
-/*   Updated: 2024/09/11 16:30:39 by jeberle          ###   ########.fr       */
+/*   Updated: 2024/09/12 11:17:31 by jeberle          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,6 @@ int	should_exit(t_desk *d)
 	result = d->end;
 	pthread_mutex_unlock(&d->end_mutex);
 	return (result);
-}
-
-void	start_trick(t_philo *p)
-{
-	log_action(p, "is thinking");
-	if (p->id % 2 != 0)
-		usleep(10000);
 }
 
 void	precise_sleep(long long time, t_desk *d)
