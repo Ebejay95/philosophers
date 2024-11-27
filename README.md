@@ -1,48 +1,141 @@
-# philosophers
+# Philosophers
 
-A project to solve the classic "Dining Philosophers" problem using threads and synchronization mechanisms in C.
+**I never thought philosophy would be so deadly!**
 
-This project implements the "Dining Philosophers" problem, focusing on coordinating between competing threads. The goal is to avoid deadlocks and ensure philosophers can safely eat and think by properly synchronizing the forks (resources).
+---
 
-## Structure
+## Summary
 
-### src/
+The **Philosophers** project simulates the classic "Dining Philosophers" problem, focusing on process synchronization and thread management. Through this project, you will learn to create threads, manage shared resources with mutexes, and ensure safe execution without deadlocks.
 
-The `src` directory contains all source code and the implementation of the philosophers simulation:
-
-- philosophers.c: The main file that starts philosopher threads, manages their life cycles, and initiates the simulation.
-- actions.c: Defines the actions of the philosophers, such as `eating`, `thinking`, and `waiting`, as well as the management of forks.
-- utils.c: Contains helper functions for timing, status updates, and console output.
-- sync.c: Provides synchronization mechanisms to prevent deadlocks and ensure philosophers act without resource collisions.
-
-### include/
-
-The `include` directory contains the header files:
-
-- philosophers.h: Declares structures, global variables, and function prototypes to maintain consistency across source files.
-
-### Makefile
-
-The Makefile automates the build process. It compiles all source files and creates the final executable.
+---
 
 ## Features
 
-- Synchronization and Threading: Uses threads for each philosopher and mutexes for the forks to avoid conflicts.
-- Deadlock Prevention: Implements strategies to avoid deadlocks and race conditions.
-- Flexible Parameters: Allows customization of the number of philosophers and time parameters for thinking and eating.
+### Core Functionality
 
-## Usage
+- **Thread-Based Simulation**:
+  - Each philosopher is represented by a thread.
+  - Synchronization mechanisms ensure safe resource allocation (forks).
 
-To compile the project, run:
+- **Dynamic Parameters**:
+  - Adjustable number of philosophers and timings:
+    - `number_of_philosophers`
+    - `time_to_die`
+    - `time_to_eat`
+    - `time_to_sleep`
+    - `[optional] number_of_times_each_philosopher_must_eat`
 
-    make
+- **Actions**:
+  - Philosophers alternate between:
+    - Eating (requires two forks).
+    - Sleeping.
+    - Thinking.
 
-Start the simulation with:
+- **Log Outputs**:
+  - Displays events such as:
+    - `timestamp_in_ms X has taken a fork`
+    - `timestamp_in_ms X is eating`
+    - `timestamp_in_ms X is sleeping`
+    - `timestamp_in_ms X is thinking`
+    - `timestamp_in_ms X died`
 
-    ./philosophers [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_think] [optional: number_of_meals]
+### Bonus Features (Optional)
 
-### Example
+- **Process-Based Simulation**:
+  - Forks replaced by semaphores.
+  - Each philosopher runs as a separate process.
+- **Enhanced Synchronization**:
+  - Centralized fork management using semaphores.
+- **Advanced Visualizations** (Optional):
+  - Additional logging and stats.
 
-    ./philosophers 5 800 200 200
+---
 
-This command starts a simulation with 5 philosophers and specific time values for death, eating, and thinking.
+## Structure
+
+### Directories and Files
+
+#### `philo/` (Mandatory)
+
+- **`philosophers.c`**:
+  Handles initialization, thread creation, and simulation lifecycle.
+- **`actions.c`**:
+  Implements eating, thinking, and sleeping behaviors.
+- **`sync.c`**:
+  Provides synchronization logic using mutexes.
+- **`utils.c`**:
+  Contains helper functions for logging, time management, and error handling.
+
+#### `philo_bonus/` (Bonus)
+
+- **`philo_bonus.c`**:
+  Similar to the mandatory part but adapted for processes and semaphores.
+- **`sync_bonus.c`**:
+  Manages semaphores for inter-process synchronization.
+
+#### `includes/`
+
+- **`philosophers.h`**:
+  Declares structures, macros, and function prototypes for consistency.
+
+### Key Files
+
+- **Makefile**:
+  Automates compilation with targets:
+  - `all`, `clean`, `fclean`, `re`, and `bonus`.
+
+---
+
+## Example Usage
+
+### Compilation
+
+1. **Compile Mandatory Part**:
+   ```bash
+   make
+Compile Bonus Part:
+bash
+Code kopieren
+make bonus
+Run Simulation
+Mandatory:
+
+bash
+Code kopieren
+./philo [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [number_of_times_each_philosopher_must_eat]
+Example:
+
+bash
+Code kopieren
+./philo 5 800 200 200
+Bonus:
+
+bash
+Code kopieren
+./philo_bonus [arguments as above]
+Rules and Constraints
+Global Variables:
+Forbidden to use global variables.
+Thread Safety:
+Mutexes ensure no data races.
+Error Handling:
+Exits cleanly with explicit error messages for invalid inputs or runtime issues.
+Learning Outcomes
+Threading Basics:
+
+Create and manage threads using pthread_create and pthread_join.
+Synchronization Mechanisms:
+
+Prevent race conditions with mutexes and semaphores.
+Performance Optimization:
+
+Minimize resource contention and ensure smooth execution.
+Philosophers – Bringing concurrency and synchronization to life! 🍝
+
+Code kopieren
+
+
+
+
+
