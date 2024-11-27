@@ -40,16 +40,6 @@ The **Philosophers** project simulates the classic "Dining Philosophers" problem
     - `timestamp_in_ms X is thinking`
     - `timestamp_in_ms X died`
 
-### Bonus Features (Optional)
-
-- **Process-Based Simulation**:
-  - Forks replaced by semaphores.
-  - Each philosopher runs as a separate process.
-- **Enhanced Synchronization**:
-  - Centralized fork management using semaphores.
-- **Advanced Visualizations** (Optional):
-  - Additional logging and stats.
-
 ---
 
 ## Structure
@@ -66,13 +56,6 @@ The **Philosophers** project simulates the classic "Dining Philosophers" problem
   Provides synchronization logic using mutexes.
 - **`utils.c`**:
   Contains helper functions for logging, time management, and error handling.
-
-#### `philo_bonus/` (Bonus)
-
-- **`philo_bonus.c`**:
-  Similar to the mandatory part but adapted for processes and semaphores.
-- **`sync_bonus.c`**:
-  Manages semaphores for inter-process synchronization.
 
 #### `includes/`
 
@@ -94,46 +77,40 @@ The **Philosophers** project simulates the classic "Dining Philosophers" problem
 1. **Compile Mandatory Part**:
    ```bash
    make
-Compile Bonus Part:
-bash
-Code kopieren
-make bonus
+   ```
+   
 Run Simulation
 Mandatory:
 
-bash
-Code kopieren
+   ```
 ./philo [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [number_of_times_each_philosopher_must_eat]
+   ```
 Example:
 
-bash
-Code kopieren
-./philo 5 800 200 200
-Bonus:
 
-bash
-Code kopieren
-./philo_bonus [arguments as above]
+   ```
+./philo 5 800 200 200
+   ```
+
 Rules and Constraints
-Global Variables:
+**Global Variables:**
 Forbidden to use global variables.
-Thread Safety:
+
+**Thread Safety:**
 Mutexes ensure no data races.
-Error Handling:
+
+**Error Handling:**
 Exits cleanly with explicit error messages for invalid inputs or runtime issues.
 Learning Outcomes
-Threading Basics:
 
+**Threading Basics:**
 Create and manage threads using pthread_create and pthread_join.
 Synchronization Mechanisms:
-
 Prevent race conditions with mutexes and semaphores.
 Performance Optimization:
 
 Minimize resource contention and ensure smooth execution.
 Philosophers – Bringing concurrency and synchronization to life! 🍝
-
-Code kopieren
 
 
 
